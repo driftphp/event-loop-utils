@@ -115,6 +115,7 @@ class EventLoopUtilsTest extends TestCase
         $loop = Factory::create();
         $value1 = false;
         $it = 0;
+        $its = [];
 
         new Promise(function ($resolver) use ($loop, &$value1) {
             $loop->futureTick(function () use ($resolver, $loop, &$value1) {
@@ -131,12 +132,14 @@ class EventLoopUtilsTest extends TestCase
             });
         });
 
-        EventLoopUtils::runLoop($loop, 2, function() use (&$it) {
+        EventLoopUtils::runLoop($loop, 2, function($iterations) use (&$it, &$its) {
             $it++;
+            $its[] = $iterations;
         });
 
         $this->assertTrue($value1);
         $this->assertEquals(2, $it);
+        $this->assertEquals([1, 0], $its);
     }
 
     /**

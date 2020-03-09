@@ -41,7 +41,7 @@ class EventLoopUtils
             --$iterations;
 
             if (is_callable($stopLoopCallable)) {
-                $stopLoopCallable();
+                $stopLoopCallable($iterations);
             }
         }
     }
