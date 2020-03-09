@@ -27,16 +27,22 @@ class EventLoopUtils
      *
      * @param LoopInterface $loop
      * @param int           $iterations
+     * @param Callable      $stopLoopCallable
      * @param bool          $forceVariable
      */
     public static function runLoop(
         LoopInterface $loop,
         int $iterations = 1,
-        bool &$forceVariable = false
+        $stopLoopCallable = null,
+        ?bool &$forceVariable = null
     ) {
         while ($iterations > 0 && !$forceVariable) {
             $loop->run();
             --$iterations;
+
+            if (is_callable($stopLoopCallable)) {
+                $stopLoopCallable();
+            }
         }
     }
 }

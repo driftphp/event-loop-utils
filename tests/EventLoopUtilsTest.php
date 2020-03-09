@@ -114,6 +114,7 @@ class EventLoopUtilsTest extends TestCase
     {
         $loop = Factory::create();
         $value1 = false;
+        $it = 0;
 
         new Promise(function ($resolver) use ($loop, &$value1) {
             $loop->futureTick(function () use ($resolver, $loop, &$value1) {
@@ -130,8 +131,12 @@ class EventLoopUtilsTest extends TestCase
             });
         });
 
-        EventLoopUtils::runLoop($loop, 2);
+        EventLoopUtils::runLoop($loop, 2, function() use (&$it) {
+            $it++;
+        });
+
         $this->assertTrue($value1);
+        $this->assertEquals(2, $it);
     }
 
     /**
@@ -159,7 +164,7 @@ class EventLoopUtilsTest extends TestCase
             });
         });
 
-        EventLoopUtils::runLoop($loop, 2, $forceStop);
+        EventLoopUtils::runLoop($loop, 2, null, $forceStop);
         $this->assertFalse($value1);
     }
 }
