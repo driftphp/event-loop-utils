@@ -1,0 +1,28 @@
+{
+    "name": "drift/event-loop-utils",
+    "description": "Event loop utils for Drift",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marc Morera",
+            "email": "yuhu@mmoreram.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "react/event-loop": "*",
+        "react/promise": "*",
+        "clue/block-react": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Drift\\EventLoop\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Drift\\EventLoop\\Tests\\": "tests/"
+        }
+    }
+}
