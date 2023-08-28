@@ -35,7 +35,7 @@ class EventLoopUtilsTest extends TestCase
         new Promise(function ($resolver) use ($loop, &$value) {
             $loop->futureTick(function () use ($resolver, $loop, &$value) {
                 $resolver(await(
-                    resolve()->then(function () use (&$value) {
+                    resolve(null)->then(function () use (&$value) {
                         $value = true;
                     }),
                     $loop
@@ -59,7 +59,7 @@ class EventLoopUtilsTest extends TestCase
         new Promise(function ($resolver) use ($loop, &$value1, &$value2) {
             $loop->futureTick(function () use ($resolver, $loop, &$value1) {
                 $resolver(await(
-                    resolve()->then(function () use (&$value1) {
+                    resolve(null)->then(function () use (&$value1) {
                         $value1 = true;
                     }),
                     $loop
@@ -67,7 +67,7 @@ class EventLoopUtilsTest extends TestCase
             });
             $loop->futureTick(function () use ($resolver, $loop, &$value2) {
                 $resolver(await(
-                    resolve()->then(function () use (&$value2) {
+                    resolve(null)->then(function () use (&$value2) {
                         $value2 = true;
                     }),
                     $loop
@@ -90,16 +90,16 @@ class EventLoopUtilsTest extends TestCase
 
         new Promise(function ($resolver) use ($loop, &$value1) {
             $loop->futureTick(function () use ($resolver, $loop, &$value1) {
-                await(resolve(), $loop);
+                await(resolve(null), $loop);
 
                 new Promise(function ($resolver) use ($loop, &$value1) {
                     $loop->futureTick(function () use ($resolver, $loop, &$value1) {
-                        await(resolve(), $loop);
+                        await(resolve(null), $loop);
                         $value1 = true;
                     });
                 });
 
-                $resolver();
+                $resolver(null);
             });
         });
 
@@ -119,16 +119,16 @@ class EventLoopUtilsTest extends TestCase
 
         new Promise(function ($resolver) use ($loop, &$value1) {
             $loop->futureTick(function () use ($resolver, $loop, &$value1) {
-                await(resolve(), $loop);
+                await(resolve(null), $loop);
 
                 new Promise(function ($resolver) use ($loop, &$value1) {
                     $loop->futureTick(function () use ($resolver, $loop, &$value1) {
-                        await(resolve(), $loop);
+                        await(resolve(null), $loop);
                         $value1 = true;
                     });
                 });
 
-                $resolver();
+                $resolver(null);
             });
         });
 
@@ -153,17 +153,17 @@ class EventLoopUtilsTest extends TestCase
 
         new Promise(function ($resolver) use ($loop, &$value1, &$forceStop) {
             $loop->futureTick(function () use ($resolver, $loop, &$value1, &$forceStop) {
-                await(resolve(), $loop);
+                await(resolve(null), $loop);
                 $forceStop = true;
 
                 new Promise(function ($resolver) use ($loop, &$value1) {
                     $loop->futureTick(function () use ($resolver, $loop, &$value1) {
-                        await(resolve(), $loop);
+                        await(resolve(null), $loop);
                         $value1 = true;
                     });
                 });
 
-                $resolver();
+                $resolver(null);
             });
         });
 
