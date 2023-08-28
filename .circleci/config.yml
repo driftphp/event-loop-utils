@@ -27,9 +27,37 @@ jobs:
             composer update -n --prefer-dist
             php vendor/bin/phpunit
 
+  test-php81:
+    docker:
+      - image: cimg/php:8.1
+
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Run tests - Highest
+          command: |
+            composer update -n --prefer-dist
+            php vendor/bin/phpunit
+
+  test-php82:
+    docker:
+      - image: cimg/php:8.2
+
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run:
+          name: Run tests - Highest
+          command: |
+            composer update -n --prefer-dist
+            php vendor/bin/phpunit
+
 workflows:
   version: 2
   test:
     jobs:
       - test-php74
       - test-php80
+      - test-php81
+      - test-php82
