@@ -138,7 +138,7 @@ class EventLoopUtilsTest extends TestCase
         });
 
         $this->assertTrue($value1);
-        $this->assertEquals(2, $it);
+        $this->assertSame(2, $it);
         $this->assertEquals([1, 0], $its);
     }
 
